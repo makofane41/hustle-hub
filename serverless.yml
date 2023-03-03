@@ -1,0 +1,12 @@
+service: hustle-hub
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  user:
+    handler: index.handler
+    events:
+      - httpApi: '*'
