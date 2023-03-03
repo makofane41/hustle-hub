@@ -19,13 +19,14 @@ app.use(express.json())
 //user-function calling routes
 const userRegister = require('./src/user_function/user_register')
 const user_login = require('./src/user_function/authLogin')
-
+const verifyOTP = require('./src/user_function/use_register_otp')
 
 
 
 //user_fucntion
 app.use('/user/r/',userRegister)
 app.use('/user/l/',user_login)
+app.use('/user/',verifyOTP)
 
 
 
