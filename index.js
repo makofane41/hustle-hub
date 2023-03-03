@@ -13,20 +13,19 @@ app.use(express.json())
 //local
 //const port = process.env.PORT || 5003;
 
-//test calling routes
-const userTest = require('./src/user_function/user_app')
-const hustler = require('./src/hustler_function/hustler_app')
+
+
 
 //user-function calling routes
 const userRegister = require('./src/user_function/user_register')
+const user_login = require('./src/user_function/authLogin')
 
-//test
-app.use('/',userTest)
-app.use('/',hustler)
+
 
 
 //user_fucntion
-app.use('/v1/',userRegister)
+app.use('/user/r/',userRegister)
+app.use('/user/l/',user_login)
 
 
 

@@ -1,14 +1,33 @@
 {
   "name": "hustle-hub",
   "version": "1.0.0",
-  "description": "",
+  "description": "<!-- title: 'Serverless Framework Node Express API on AWS' description: 'This template demonstrates how to develop and deploy a simple Node Express API running on AWS Lambda using the traditional Serverless Framework.' layout: Doc framework: v3 platform: AWS language: nodeJS priority: 1 authorLink: 'https://github.com/serverless' authorName: 'Serverless, inc.' authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4' -->",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
     "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.21",
     "serverless-http": "^3.1.1"
-  }
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makofane41/hustle-hub.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/makofane41/hustle-hub/issues"
+  },
+  "homepage": "https://github.com/makofane41/hustle-hub#readme"
 }

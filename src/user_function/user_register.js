@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const serverless = require("serverless-http");
 const nodemailer = require('nodemailer');
 const UserRegister = express.Router();
 const bcrypt = require('bcrypt');
@@ -25,7 +24,7 @@ const transporter = nodemailer.createTransport({
 });
 //database configurations
 
-UserRegister.post('/user/auth/register', (req, res) => {
+UserRegister.post('/auth/register', (req, res) => {
     
     const verified = "false";
     const role =  "user";
