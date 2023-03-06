@@ -22,6 +22,9 @@ const user_login = require('./src/user_function/authLogin')
 const verifyOTP = require('./src/user_function/use_register_otp')
 const forgottenPasswd = require('./src/user_function/forgottenpassd')
 
+//hustler-function calling routes
+const RegisterBusiness = require('./src/hustler_function/register_business')
+
 
 
 //user_fucntion
@@ -29,6 +32,9 @@ app.use('/user/r/',userRegister)
 app.use('/user/l/',user_login)
 app.use('/user/',verifyOTP)
 app.use('/user/passwd/',forgottenPasswd)
+
+//vendor || hustler functionality 
+app.use('/vendor/',RegisterBusiness)
 
 
 
