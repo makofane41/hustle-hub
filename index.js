@@ -25,7 +25,8 @@ const forgottenPasswd = require('./src/user_function/forgottenpassd')
 //hustler-function calling routes
 const RegisterBusiness = require('./src/hustler_function/register_business')
 
-
+//calling event functionality
+const eventRouter = require('./src/events/create')
 
 //user_fucntion
 app.use('/user/r/',userRegister)
@@ -35,6 +36,9 @@ app.use('/user/passwd/',forgottenPasswd)
 
 //vendor || hustler functionality 
 app.use('/vendor/',RegisterBusiness)
+
+//events-fucntionalits (CRUD)
+
 
 
 
