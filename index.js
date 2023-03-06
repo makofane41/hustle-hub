@@ -38,6 +38,7 @@ app.use('/user/passwd/',forgottenPasswd)
 app.use('/vendor/',RegisterBusiness)
 
 //events-fucntionalits (CRUD)
+app.use('/event/',eventRouter)
 
 
 
