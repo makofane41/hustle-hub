@@ -5,8 +5,7 @@ const mysql = require('mysql');
 const Joi = require('joi');
 
 ///database connection
-const con = mysql.createPool({
-  connectionLimit: 10, // maximum number of connections to create at once
+const con = mysql.createConnection({
   host: 'us-cdbr-east-06.cleardb.net',
   user: 'bf66cd93ed1528',
   password: '0865175e',
@@ -18,7 +17,7 @@ const eventSchema = Joi.object({
   event_name: Joi.string().required(),
   event_category: Joi.string().required(),
   event_date: Joi.date().required(),
-  event_ticket_prices: Joi.number().required(),
+  event_ticket_prices: Joi.array().items(Joi.number()).required(),
   available_space: Joi.number().required(),
   venue_and_time: Joi.string().required(),
   featured: Joi.boolean().required(),
@@ -51,7 +50,7 @@ eventRouter.post('/create/event', function(req, res) {
           eventData.event_name,
           eventData.event_category,
           eventData.event_date,
-          eventData.event_ticket_prices,
+          JSON.stringify(eventData.event_ticket_prices),
           eventData.available_space,
           eventData.venue_and_time,
           eventData.featured,
@@ -68,9 +67,5 @@ eventRouter.post('/create/event', function(req, res) {
     }
   });
 });
-
-
-//end db connection
-
 
 module.exports = eventRouter;

@@ -5,11 +5,12 @@ const user_login = express.Router();
 const mysql = require('mysql')
 
 //database connection
-const con = mysql.createConnection({
-  host              : 'us-cdbr-east-06.cleardb.net',
-  user              : 'bf66cd93ed1528',
-  password          : '0865175e',
-  database          : 'heroku_12a464313c3566d'
+const con = mysql.createPool({
+  connectionLimit: 10, // maximum number of connections to create at once
+  host: 'us-cdbr-east-06.cleardb.net',
+  user: 'bf66cd93ed1528',
+  password: '0865175e',
+  database: 'heroku_12a464313c3566d'
 });
 
 
@@ -64,5 +65,9 @@ user_login.post('/auth/login', (req, res) => {
     }
   });
 });
+
+
+//end db connection
+
 
 module.exports = user_login;
