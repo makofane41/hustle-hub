@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const serviceRouter = express.Router();
+const createProduct = express.Router();
 const mysql = require('mysql');
 const Joi = require('joi');
 
@@ -14,16 +14,15 @@ const con = mysql.createPool({
 });
 
 // Products schema for validation
-const serviceSchema = Joi.object({
+const productSchema = Joi.object({
   product_name: Joi.string().required(),
-  product_category: Joi.string().required(),
-  service_price: Joi.number().required(),
-  description: Joi.string().required(),
-  featured: Joi.boolean().required(),
-});
+  product_description: Joi.string().required(),
+  product_price: Joi.number().required(),
+  category_name: Joi.string().required(),
 
-// Adding service logic
-serviceRouter.post('/create/service', function(req, res) {
+});
+// Adding products logic
+createProduct.post('/create', function(req, res) {
   const { token } = req.headers;
 
   jwt.verify(token, 'My Seckret Key', function(err, decoded) {
@@ -31,42 +30,55 @@ serviceRouter.post('/create/service', function(req, res) {
       res.status(401).send({ error: 'Unauthorized' });
     } else {
       const { uid } = decoded;
-      const serviceData = req.body;
+      const productData = req.body;
 
       // Validate request body against service schema
-      const { error } = serviceSchema.validate(serviceData);
+      const { error } = productSchema.validate(productData);
       if (error) {
         res.status(400).send({ error: error.details[0].message });
         return;
       }
+       //getting the business id and set some posting restriction
+       con.query(`SELECT * FROM business WHERE uid=${uid}`,function(error,results,fields){
+         if(error){
+          res.status(500).send({
+            error: 'Something went wrong'
+          });
 
-      // Add user ID to service data
-      serviceData.uid = uid;
+         }else if(results.length>0){
+            const business_info = results[0];
 
-      con.query(
-        'INSERT INTO service (service_name, service_category, service_price, description,  featured, uid) VALUES (?, ?, ?, ?, ?, ?)',
-        [
-          serviceData.service_name,
-          serviceData.service_category,
-          serviceData.service_price,
-          serviceData.description,
-          serviceData.featured,
-          serviceData.uid,
-        ],
-        function(error, results, fields) {
-          if (error) {
-            res.status(500).send({ error: 'Something went wrong' });
-          } else {
-            res.status(200).send({ message: 'service successfully added' });
-          }
-        }
-      );
+            //grab the business_id
+            const business_id = business_info.bid
+
+            //inserting the products information
+            con.query(
+              `INSERT INTO product (product_name, product_description, product_price, business_id,  category_name) VALUES (?, ?, ?, ?, ?)`,
+              [
+                productData.product_name,
+                productData.product_description,
+                productData.product_price,
+                business_id,
+                productData.category_name,
+
+              ],
+              function(error, results, fields) {
+                if (error) {
+                  res.status(500).send({ error: 'Something went wrong'});
+                } else {
+                  res.status(200).send({ message: 'product successfully added' });
+                }
+              }
+            );
+
+         }else{
+          res.status(500).send({ message: 'vendor subscription invalid' });
+         }
+       });
+      
     }
   });
 });
 
-
 //end db connection
-
-
-module.exports = serviceRouter;
+module.exports = createProduct;

@@ -22,7 +22,7 @@ const serviceSchema = Joi.object({
 });
 
 // Adding service logic
-serviceRouter.post('/create/service', function(req, res) {
+serviceRouter.post('/create/', function(req, res) {
   const { token } = req.headers;
 
   jwt.verify(token, 'My Seckret Key', function(err, decoded) {
@@ -49,7 +49,7 @@ serviceRouter.post('/create/service', function(req, res) {
             const business_info = results[0];
 
             //grab the business_id
-            const business_id = business_info.business_id
+            const business_id = business_info.bid
 
             //inserting the service information
             con.query(
