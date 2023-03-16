@@ -13,6 +13,10 @@ app.use(express.json())
 //local
 //const port = process.env.PORT || 5003;
 
+//cors
+app.use(cors());
+
+
 
 //user-function calling routes
 const userRegister = require('./src/user_function/user_register')
